@@ -4,9 +4,9 @@ services:
   backend:
     image: gestiondestock
     environment:
-      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/gestionstock?createDatabaseIfNotExist=true&useSSL=false&useUnicode=true&allowPublicKeyRetrieval=true&serverTimezone=UTC
-      MYSQL_USER: root
-      MYSQL_PASSWORD: admin
+      SPRING_DATASOURCE_URL: jdbc:mysql://${MYSQL_HOST}:${MYSQL_PORT}/${MYSQL_DATABASE}?createDatabaseIfNotExist=true&useSSL=false&useUnicode=true&allowPublicKeyRetrieval=true&serverTimezone=UTC
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
     ports:
       - "8081:8081"
     restart: always
@@ -16,8 +16,8 @@ services:
     image: mysql:latest
     container_name: mysql
     environment:
-      MYSQL_ROOT_PASSWORD: admin
-      MYSQL_DATABASE: gestionstock
+      MYSQL_ROOT_PASSWORD: ${MYSQL_USER}
+      MYSQL_DATABASE: ${MYSQL_PASSWORD}
 
     ports:
       - "3306:3306"
