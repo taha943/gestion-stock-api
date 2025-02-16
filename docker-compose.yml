@@ -1,0 +1,34 @@
+version: '3.8'
+
+services:
+  backend:
+    image: gestiondestock
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/gestionstock?createDatabaseIfNotExist=true&useSSL=false&useUnicode=true&allowPublicKeyRetrieval=true&serverTimezone=UTC
+      MYSQL_USER: root
+      MYSQL_PASSWORD: admin
+    ports:
+      - "8081:8081"
+    restart: always
+    depends_on:
+      - mysql
+  mysql:
+    image: mysql:latest
+    container_name: mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: admin
+      MYSQL_DATABASE: gestionstock
+
+    ports:
+      - "3306:3306"
+    volumes:
+      - ./mysql_data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 10s
+      retries: 5
+      start_period: 20s
+
+
+#volumes:
+#    mysql_data:
