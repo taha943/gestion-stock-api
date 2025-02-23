@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata: 
+  labels: 
+    app: gestion-stock-api
+  name: gestion-stock-api
+spec: 
+  replicas: 1
+  selector: 
+    matchLabels: 
+      app: gestion-stock-api
+  template: 
+    metadata: 
+      labels: 
+        app: gestion-stock-api
+    spec: 
+      containers: 
+        -
+          image: "gestionstock:latest"
+          imagePullPolicy: Never
+          name: gestion-stock-api
+          ports: 
+            - containerPort: 8081
+          env:
+            - name: SPRING_DATASOURCE_URL
+              value: jdbc:mysql://mysql-service:3306/gestionstock?createDatabaseIfNotExist=true&useSSL=false&useUnicode=true&allowPublicKeyRetrieval=true&serverTimezone=UTC
+            - name: MYSQL_USER
+              value: root
+            - name: MYSQL_PASSWORD
+              value: admin
